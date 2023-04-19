@@ -141,8 +141,8 @@ function addLand(address _LandId,
                  address _PropertyID) public 
                  {
 
-    require (msg.sender == sellerId );
-    require (isSeller[sellerId]); 
+    require (msg.sender == sellerId,"You are not allowed to add the land details" );
+    require (isSeller[sellerId],"Seller is not verified"); 
     LandID = _LandId;   
     land[_LandId].LandId = LandID;
     land[_LandId].Area = _area;
@@ -229,12 +229,12 @@ function depositPrice() public OnlyBuyer payable
 be transferred to the buyer and property id will be changed to the buyer's address. This function is only callable 
 by the current landowner
 */
-function TransferOwnership() public  OnlyOwner payable
+function TransferOwnership() public  OnlyOwner
 
  {
-  require (isBuyer[buyerId]);
-  require (isLand[LandID]);
-  require (depositAmount[buyerId] >= land[LandID].LandPrice );
+  require (isBuyer[buyerId],"Buyer is not verified");
+  require (isLand[LandID],"Land is not verified");
+  require (depositAmount[buyerId] >= land[LandID].LandPrice, "Amount is not enough" );
   depositAmount[buyerId] -= land[LandID].LandPrice;
   land[LandID].PropertyID = buyerId;
 
